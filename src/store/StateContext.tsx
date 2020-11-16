@@ -18,7 +18,7 @@ import {
 } from "./zoom";
 import { handleDisableAnimation, animateComponent } from "./animations";
 import { handleZoomPinch } from "./pinch";
-import { handlePanning, handlePanningAnimation } from "./pan";
+import { handlePanning, handlePanningAnimation, handlePanToBounds } from "./pan";
 import {
   handleFireVelocity,
   animateVelocity,
@@ -477,6 +477,12 @@ class StateProvider extends Component<StateContextProps, StateContextState> {
       positionY,
       scale: isNaN(newScale) ? scale : newScale,
     };
+
+    if (newScale < 1) {
+      const toBoundState = handlePanToBounds.call(this);
+      targetState.positionX = toBoundState.positionX;
+      targetState.positionY = toBoundState.positionY;
+    }
 
     animateComponent.call(this, {
       targetState,
