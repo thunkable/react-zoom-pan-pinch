@@ -7,8 +7,15 @@ class TransformComponent extends React.Component {
   private contentRef = React.createRef<HTMLDivElement>();
 
   componentDidMount() {
+    console.log('TransformComponent componentDidMount');
     const { nodes } = this.context;
     nodes.setWrapperComponent(this.wrapperRef.current);
+    nodes.setContentComponent(this.contentRef.current);
+  }
+
+  centerContent = () => {
+    console.log('TransformComponent centerContent');
+    const { nodes } = this.context;
     nodes.setContentComponent(this.contentRef.current);
   }
 
